@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded" , ()=>{
         const target =  e.target;
         if (target && target.classList.contains('tabheader__item')) {
             tabs.forEach((item, i)=>{
-                if (target == item) {
+                if (target === item) {
                     hideTabContent();
                     showTabContent(i);
                 }
@@ -37,11 +37,11 @@ window.addEventListener("DOMContentLoaded" , ()=>{
     const deadLine = '2024-08-07-';
 
     function getTimeRemaining(endtime) {
-        const t = Date.parse(endtime) - Date.parse(new Date()),
-            days = Math.floor( (t/(1000*60*60*24)) ),
-            seconds = Math.floor( (t/1000) % 60 ),
-            minutes = Math.floor( (t/1000/60) % 60 ),
-            hours = Math.floor( (t/(1000*60*60) % 24) );
+        const t = Date.parse(endtime) - Date.parse(new Date());
+        const days = Math.floor((t / (1000 * 60 * 60 * 24)));
+        const seconds = Math.floor((t / 1000) % 60);
+        const minutes = Math.floor((t / 1000 / 60) % 60);
+        const hours = Math.floor((t / (1000 * 60 * 60) % 24));
 
         return {
             'total': t,
@@ -83,4 +83,37 @@ window.addEventListener("DOMContentLoaded" , ()=>{
     }
 
     setClock('.timer', deadLine)
-})
+
+    //Modal
+
+    const modalTrigger = document.querySelectorAll('[data-modal]');
+    const modal = document.querySelector('.modal');
+    const modalClose = document.querySelector('[data-close]');
+
+    function toggleModal () {
+        modal.classList.toggle('show');
+        document.body.style.overflowY = 'auto';
+    }
+
+    modalTrigger.forEach(e => {
+        e.addEventListener('click', () => {
+            toggleModal();
+            document.body.style.overflowY = 'hidden';
+        });
+    })
+
+    modalClose.addEventListener('click', () => {
+        toggleModal();
+    });
+    modal.addEventListener('click', e => {
+        if (e.target === modal) {
+            toggleModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            toggleModal();
+        }
+    });
+});
