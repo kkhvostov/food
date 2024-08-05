@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded" , ()=>{
         }
     });
     //timer
-    const deadLine = '2024-08-07-';
+    const deadLine = '2024-08-07';
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date());
@@ -93,6 +93,7 @@ window.addEventListener("DOMContentLoaded" , ()=>{
     function toggleModal () {
         modal.classList.toggle('show');
         document.body.style.overflowY = 'auto';
+        clearInterval(modalTimerId);
     }
 
     modalTrigger.forEach(e => {
@@ -116,4 +117,16 @@ window.addEventListener("DOMContentLoaded" , ()=>{
             toggleModal();
         }
     });
+
+    const modalTimerId = setTimeout(toggleModal, 3000);
+
+    function showModalByScroll(){
+        if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            toggleModal();
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+
+    window.addEventListener("scroll", showModalByScroll)
 });
