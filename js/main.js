@@ -118,7 +118,7 @@ window.addEventListener("DOMContentLoaded" , ()=>{
         }
     });
 
-    //const modalTimerId = setTimeout(toggleModal, 3000);
+    const modalTimerId = setTimeout(toggleModal, 3000);
 
     function showModalByScroll(){
         if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
@@ -203,4 +203,16 @@ window.addEventListener("DOMContentLoaded" , ()=>{
         'menu__item'
 
     ).render();
+
+    //Forms
+
+    const forms = document.querySelectorAll('form');
+    function postData(form){
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            const request = new XMLHttpRequest();
+            request.open('POST', server.php);
+        })
+    }
 });
